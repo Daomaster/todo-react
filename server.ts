@@ -2,8 +2,8 @@ import express from 'express'
 import cors from 'cors';
 import mongoose from 'mongoose';
 import compression from 'compression';
-import {ApolloServer} from "apollo-server-express";
-import apolloConfig from "./src/schemas/indext";
+import {ApolloServer} from 'apollo-server-express';
+import apolloConfig from "./src/graphql";
 
 const app = express();
 
@@ -25,6 +25,8 @@ mongoose.connect(mongoUrl, { useNewUrlParser: true , useUnifiedTopology: true })
     .then(() => {
         // start the server once mongo is connected
         app.listen(8000);
+
+        console.log("The server has started");
     })
     .catch(err => {
         console.log(err)
