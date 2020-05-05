@@ -49,7 +49,7 @@ export const login = async (parent: any, args: IModifyUser) => {
         // return the auth data
         let authData: IAuthData = {
             userId: user.id,
-            token: token
+            token: `Bearer ${token}`
         }
         return authData;
 
@@ -89,7 +89,7 @@ export const createUser = async (parent: any, args: IUserArgs) => {
         // return the auth data
         let authData: IAuthData = {
             userId: user.id,
-            token: token
+            token: `Bearer ${token}`
         }
         return authData;
     } catch (e) {

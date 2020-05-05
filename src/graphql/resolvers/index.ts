@@ -4,7 +4,6 @@ import {IResolvers} from "graphql-tools";
 
 const resolvers: IResolvers = {
     Query: {
-        login,
         todos,
     },
     Mutation: {
@@ -12,6 +11,7 @@ const resolvers: IResolvers = {
         createTodo,
         updateTodo,
         deleteTodo,
+        login,
     }
 };
 

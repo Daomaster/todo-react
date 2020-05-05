@@ -1,11 +1,13 @@
 import React from 'react';
-import Todo from "../Todo/Todo";
+import TodoItem from '../TodoItem/TodoItem';
 
-const TodoList: React.FC = () => (
-  <div data-testid="TodoList">
-    TodoList Component
-      <Todo/>
-  </div>
-);
+const TodoList: React.FC = () => {
+  return (
+    <div data-testid="TodoList">
+      TodoList Component
+      <TodoItem />
+    </div>
+  );
+};
 
 export default TodoList;

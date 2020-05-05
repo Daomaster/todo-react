@@ -1,9 +1,9 @@
 import React from 'react';
-import Login from "../../components/Login/Login";
+import LoginForm from '../../components/Login/LoginForm';
 
 const LoginPage: React.FC = () => (
   <div data-testid="LoginPage">
-    <Login/>
+    <LoginForm />
   </div>
 );
 

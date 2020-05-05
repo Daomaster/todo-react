@@ -1,15 +1,15 @@
 import React from 'react';
 import { cleanup, render } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import Todo from './Todo';
+import AddTodo from './AddTodo';
 
-describe('<Todo />', () => {
+describe('<AddTodo />', () => {
   afterEach(cleanup);
 
   test('it should mount', () => {
-    const { getByTestId } = render(<Todo />);
-    const todo = getByTestId('Todo');
+    const { getByTestId } = render(<AddTodo />);
+    const addTodo = getByTestId('AddTodo');
 
-    expect(todo).toBeInTheDocument();
+    expect(addTodo).toBeInTheDocument();
   });
 });

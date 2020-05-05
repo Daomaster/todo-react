@@ -1,13 +1,13 @@
 import React from 'react';
 import { cleanup, render } from '@testing-library/react';
 import '@testing-library/jest-dom/extend-expect';
-import Login from './Login';
+import LoginForm from './LoginForm';
 
 describe('<Login />', () => {
   afterEach(cleanup);
 
   test('it should mount', () => {
-    const { getByTestId } = render(<Login />);
+    const { getByTestId } = render(<LoginForm />);
     const login = getByTestId('Login');
 
     expect(login).toBeInTheDocument();

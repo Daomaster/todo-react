@@ -14,9 +14,19 @@ interface ITodoArgs {
     deleteTodoInput: IModifyTodoInput;
 }
 
+function checkUserData(data: IUserData) {
+    if (!data.isAuth) {
+        throw new Error("The user is not logged in");
+    }
+
+    return;
+}
+
 // query all the todos based on the userID
 export const todos = async (parent: any, args: ITodoArgs, context: IUserData) => {
-   try {
+    checkUserData(context);
+
+    try {
        // make sure only get the todos that belongs to this user
        return Todo.find({user: context.userId});
    } catch (e) {
@@ -26,6 +36,8 @@ export const todos = async (parent: any, args: ITodoArgs, context: IUserData) =>
 
 // create a item for the specified user
 export const createTodo = async (parent: any, args: ITodoArgs, context: IUserData) => {
+    checkUserData(context);
+
     const todo = new Todo({
         user: context.userId,
         description: args.createTodoInput.description
@@ -39,6 +51,8 @@ export const createTodo = async (parent: any, args: ITodoArgs, context: IUserDat
 
 // update an item
 export const updateTodo = async (parent: any, args: ITodoArgs, context: IUserData) => {
+    checkUserData(context);
+
     try {
         // firstly find the todos
         const todo = await Todo.findOne({_id: args.updateTodoInput.todoId, user: context.userId})
@@ -60,6 +74,8 @@ export const updateTodo = async (parent: any, args: ITodoArgs, context: IUserDat
 
 // delete an item
 export const deleteTodo = async (parent: any, args: ITodoArgs, context: IUserData) => {
+    checkUserData(context);
+
     try {
         // firstly find the todos
         const todo = await Todo.findOne({_id: args.deleteTodoInput.todoId, user: context.userId})

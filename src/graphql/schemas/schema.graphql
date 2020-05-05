@@ -1,6 +1,5 @@
 type Query {
     todos: [Todo!]
-    login(username: String!, password: String!): AuthData!
 }
 
 type Mutation {
@@ -8,12 +7,13 @@ type Mutation {
     createTodo(createTodoInput: CreateTodoInput): Todo!
     updateTodo(updateTodoInput: UpdateTodoInput): Todo!
     deleteTodo(deleteTodoInput: DeleteTodoInput): ID
+    login(username: String!, password: String!): AuthData!
 }
 
 type Todo {
     id: String!
     description: String!
-    user: User!
+    user: User
 }
 
 type User {

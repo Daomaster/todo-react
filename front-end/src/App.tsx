@@ -1,24 +1,25 @@
 import React from 'react';
-import './App.module.less';
-import {BrowserRouter, Redirect, Route, Switch} from 'react-router-dom';
-import {Layout, PageHeader} from "antd";
-import LoginPage from "./pages/LoginPage/LoginPage";
-import TodoPage from "./pages/TodoPage/TodoPage";
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
+import LoginPage from './pages/LoginPage/LoginPage';
+import TodoPage from './pages/TodoPage/TodoPage';
+import { ApolloProvider } from '@apollo/react-hooks';
+import GraphQLClient from './lib/graphql/client';
 
 function App() {
+  const client = GraphQLClient;
+
   return (
-    <div className="App">
-        <Layout>
-            <PageHeader title="Managing Your To-dos"/>
-            <BrowserRouter>
-                <Switch>
-                    <Redirect from="/" to="/login" exact/>
-                    <Route path="/login" component={LoginPage}/>
-                    <Route path="/todo" component={TodoPage}/>
-                </Switch>
-            </BrowserRouter>
-        </Layout>
-    </div>
+    <ApolloProvider client={client}>
+      <div className="App">
+        <BrowserRouter>
+          <Switch>
+            <Redirect from="/" to="/login" exact />
+            <Route path="/login" component={LoginPage} />
+            <Route path="/todo" component={TodoPage} />
+          </Switch>
+        </BrowserRouter>
+      </div>
+    </ApolloProvider>
   );
 }
 
