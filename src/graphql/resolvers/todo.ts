@@ -1,5 +1,5 @@
 import Todo from '../../models/todo';
-import {IAuthData} from "../index";
+import {IUserData} from "../context";
 
 // resolver to handle todos related
 
@@ -15,7 +15,7 @@ interface ITodoArgs {
 }
 
 // query all the todos based on the userID
-export const todos = async (parent: any, args: ITodoArgs, context: IAuthData) => {
+export const todos = async (parent: any, args: ITodoArgs, context: IUserData) => {
    try {
        // make sure only get the todos that belongs to this user
        return Todo.find({user: context.userId});
@@ -25,7 +25,7 @@ export const todos = async (parent: any, args: ITodoArgs, context: IAuthData) =>
 };
 
 // create a item for the specified user
-export const createTodo = async (parent: any, args: ITodoArgs, context: IAuthData) => {
+export const createTodo = async (parent: any, args: ITodoArgs, context: IUserData) => {
     const todo = new Todo({
         user: context.userId,
         description: args.createTodoInput.description
@@ -38,7 +38,7 @@ export const createTodo = async (parent: any, args: ITodoArgs, context: IAuthDat
 };
 
 // update an item
-export const updateTodo = async (parent: any, args: ITodoArgs, context: IAuthData) => {
+export const updateTodo = async (parent: any, args: ITodoArgs, context: IUserData) => {
     try {
         // firstly find the todos
         const todo = await Todo.findOne({_id: args.updateTodoInput.todoId, user: context.userId})
@@ -59,7 +59,7 @@ export const updateTodo = async (parent: any, args: ITodoArgs, context: IAuthDat
 }
 
 // delete an item
-export const deleteTodo = async (parent: any, args: ITodoArgs, context: IAuthData) => {
+export const deleteTodo = async (parent: any, args: ITodoArgs, context: IUserData) => {
     try {
         // firstly find the todos
         const todo = await Todo.findOne({_id: args.deleteTodoInput.todoId, user: context.userId})

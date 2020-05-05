@@ -5,6 +5,11 @@ import User from '../../models/user';
 
 // resolver to handle user auth related
 
+interface IAuthData {
+    userId: string;
+    token: string;
+}
+
 interface IModifyUser {
     username: string;
     password: string;
@@ -32,7 +37,7 @@ export const login = async (parent: any, args: IModifyUser) => {
             throw new Error('Password is incorrect!');
         }
 
-        // return the jwt
+        // sign the jwt
         const token = jwt.sign(
             { userId: user.id, username: user.username },
             secret,
@@ -40,7 +45,13 @@ export const login = async (parent: any, args: IModifyUser) => {
                 expiresIn: '1h'
             }
         );
-        return { userId: user.id, token: token};
+
+        // return the auth data
+        let authData: IAuthData = {
+            userId: user.id,
+            token: token
+        }
+        return authData;
 
     } catch (e) {
         throw new Error(e);
@@ -66,7 +77,7 @@ export const createUser = async (parent: any, args: IUserArgs) => {
         // save the user in the db
         await user.save();
 
-        // return the auth data
+        // sign the auth data
         const token = jwt.sign(
             { userId: user.id, username: user.username },
             secret,
@@ -74,8 +85,13 @@ export const createUser = async (parent: any, args: IUserArgs) => {
                 expiresIn: '1h'
             }
         );
-        
-        return { userId: user.id, token: token};
+
+        // return the auth data
+        let authData: IAuthData = {
+            userId: user.id,
+            token: token
+        }
+        return authData;
     } catch (e) {
         throw new Error(e);
     }
