@@ -5,11 +5,20 @@ import User from '../../models/user';
 
 // resolver to handle user auth related
 
+interface IModifyUser {
+    username: string;
+    password: string;
+}
+
+interface IUserArgs {
+    createUserInput: IModifyUser;
+}
+
 // temp placeholder for the jwt secret
 const secret = "my jwt secret";
 
 // login the user and return the auth data
-export const login = async (parent: any, args: any) => {
+export const login = async (parent: any, args: IModifyUser) => {
     try {
         const user = await User.findOne({ username: args.username });
         // check if the user exist first
@@ -39,7 +48,7 @@ export const login = async (parent: any, args: any) => {
 }
 
 // create a user in the db and login the user
-export const createUser = async (parent: any, args: any) => {
+export const createUser = async (parent: any, args: IUserArgs) => {
     try {
         const uniqueUser = await User.findOne({ username: args.createUserInput.username });
         if (uniqueUser) {
@@ -65,9 +74,7 @@ export const createUser = async (parent: any, args: any) => {
                 expiresIn: '1h'
             }
         );
-
-        console.log(token);
-
+        
         return { userId: user.id, token: token};
     } catch (e) {
         throw new Error(e);

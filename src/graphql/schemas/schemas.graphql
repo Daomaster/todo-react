@@ -37,10 +37,10 @@ input CreateTodoInput {
 }
 
 input UpdateTodoInput {
-    todoID: ID!
+    todoId: ID!
     description: String!
 }
 
 input DeleteTodoInput {
-    todoID: ID!
+    todoId: ID!
 }

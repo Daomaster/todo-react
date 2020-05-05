@@ -1,4 +1,4 @@
-import {todos, createTodo} from './todo'
+import {todos, createTodo, updateTodo, deleteTodo} from './todo'
 import {login, createUser} from "./auth";
 import {IResolvers} from "graphql-tools";
 
@@ -10,6 +10,8 @@ const resolvers: IResolvers = {
     Mutation: {
         createUser,
         createTodo,
+        updateTodo,
+        deleteTodo,
     }
 };
 
