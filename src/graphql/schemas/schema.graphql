@@ -6,7 +6,7 @@ type Mutation {
     createUser(createUserInput: CreateUserInput): AuthData!
     createTodo(createTodoInput: CreateTodoInput): Todo!
     updateTodo(updateTodoInput: UpdateTodoInput): Todo!
-    deleteTodo(deleteTodoInput: DeleteTodoInput): ID
+    deleteTodo(deleteTodoInput: DeleteTodoInput): String!
     login(username: String!, password: String!): AuthData!
 }
 

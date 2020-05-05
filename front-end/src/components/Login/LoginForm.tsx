@@ -15,7 +15,7 @@ const LoginForm: React.FC = () => {
     LOGIN,
     {
       onCompleted({ login }) {
-        localStorage.setItem('token', login.token);
+        localStorage.setItem('auth', JSON.stringify(login));
         history.push('/todo');
       },
     }

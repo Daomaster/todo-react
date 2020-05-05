@@ -7,6 +7,14 @@
 // START Enums and Input Objects
 //==============================================================
 
+export interface CreateTodoInput {
+  description: string;
+}
+
+export interface DeleteTodoInput {
+  todoId: string;
+}
+
 //==============================================================
 // END Enums and Input Objects
 //==============================================================

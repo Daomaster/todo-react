@@ -17,3 +17,18 @@ export const GET_TODOS = gql`
     }
   }
 `;
+
+export const CREATE_TODOS = gql`
+  mutation CreateTodo($createInput: CreateTodoInput!) {
+    createTodo(createTodoInput: $createInput) {
+      id
+      description
+    }
+  }
+`;
+
+export const DELETE_TODOS = gql`
+  mutation DeleteTodo($deleteInput: DeleteTodoInput!) {
+    deleteTodo(deleteTodoInput: $deleteInput)
+  }
+`;

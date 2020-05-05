@@ -1,33 +1,75 @@
 import React from 'react';
 import TodoList from '../../components/TodoList/TodoList';
-import { useQuery } from '@apollo/react-hooks';
+import { useMutation, useQuery } from '@apollo/react-hooks';
 import { useHistory } from 'react-router-dom';
 import styles from './TodoPage.module.less';
-import { GET_TODOS } from '../../lib/graphql/query';
+import { CREATE_TODOS, DELETE_TODOS, GET_TODOS } from '../../lib/graphql/query';
 // TODO: fix the generator for the interface names
 // eslint-disable-next-line @typescript-eslint/camelcase
 import { Todos, Todos_todos } from '../../lib/graphql/types/Todos';
 import { Card, Button, Row, Col, Tooltip } from 'antd';
 import { PoweroffOutlined } from '@ant-design/icons';
 import AddTodo from '../../components/AddTodo/AddTodo';
+import {
+  CreateTodo,
+  CreateTodoVariables,
+} from '../../lib/graphql/types/CreateTodo';
+import {
+  DeleteTodo,
+  DeleteTodoVariables,
+} from '../../lib/graphql/types/DeleteTodo';
+import { CreateTodoInput, DeleteTodoInput } from '../../../types/globalTypes';
 
 const TodoPage: React.FC = () => {
   const history = useHistory();
+
+  // check if user has signed in
+  const userInfo = localStorage.getItem('auth');
+  if (!userInfo) {
+    history.push('/login');
+  }
+
   const { data, loading, error } = useQuery<Todos>(GET_TODOS);
+  const [deleteTodo] = useMutation<DeleteTodo, DeleteTodoVariables>(
+    DELETE_TODOS,
+    {
+      refetchQueries: [{ query: GET_TODOS }],
+      onCompleted() {
+        console.log('The todo has been deleted');
+      },
+    }
+  );
+  const [createTodo] = useMutation<CreateTodo, CreateTodoVariables>(
+    CREATE_TODOS,
+    {
+      refetchQueries: [{ query: GET_TODOS }],
+      onCompleted() {
+        console.log('The todo has been created');
+      },
+    }
+  );
 
   const logoutHandler = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem('auth');
     history.push('/login');
   };
 
-  const addTodoHandler = (description: string) => {
-    console.log(description);
+  const addTodoHandler = async (description: string) => {
+    const input: CreateTodoInput = {
+      description: description,
+    };
+
+    await createTodo({ variables: { createInput: input } });
   };
 
   // TODO: fix the generator for the interface names
   // eslint-disable-next-line @typescript-eslint/camelcase
-  const removeTodoHandler = (todo: Todos_todos) => {
-    console.log('remove', todo);
+  const removeTodoHandler = async (todo: Todos_todos) => {
+    const input: DeleteTodoInput = {
+      todoId: todo.id,
+    };
+
+    await deleteTodo({ variables: { deleteInput: input } });
   };
 
   // TODO: fix the generator for the interface names
@@ -61,9 +103,7 @@ const TodoPage: React.FC = () => {
 
       <Card title="Todo List" className={styles.ContainerCard}>
         <div className={styles.AddContainer}>
-          <AddTodo
-              onAddTodo={addTodoHandler}
-          />
+          <AddTodo onAddTodo={addTodoHandler} />
         </div>
         <TodoList
           todos={data.todos}
