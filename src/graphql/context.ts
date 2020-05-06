@@ -14,6 +14,8 @@ export interface GraphQLContext {
   Auth: UserData;
 }
 
+const secret = `${process.env.JWT_SECRET}`;
+
 const getAuth = (req: any) => {
   let token = req.headers.authorization;
 
@@ -28,7 +30,7 @@ const getAuth = (req: any) => {
     }
 
     try {
-      return jwt.verify(token, '111') as UserData;
+      return jwt.verify(token, secret) as UserData;
     } catch (e) {
       throw new AuthenticationError(
         'Your session expired. Sign in again.',

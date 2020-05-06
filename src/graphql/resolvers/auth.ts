@@ -1,8 +1,6 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { combineResolvers } from 'graphql-resolvers';
 import { GraphQLContext } from '../context';
-import { User } from '../../models/userModel';
 
 // resolver to handle user auth related
 
@@ -20,8 +18,7 @@ interface UserArgs {
   createUserInput: ModifyUser;
 }
 
-// temp placeholder for the jwt secret
-const secret = '111';
+const secret = `${process.env.JWT_SECRET}`;
 
 // login the user and return the auth data
 export const login = async (parent: any, args: ModifyUser, context: GraphQLContext) => {
