@@ -24,8 +24,8 @@ const TodoPage: React.FC = () => {
   const history = useHistory();
 
   // check if user has signed in
-  const userInfo = localStorage.getItem('auth');
-  if (!userInfo) {
+  const isLoggedIn = localStorage.getItem('token');
+  if (!isLoggedIn) {
     history.push('/login');
   }
 

@@ -11,6 +11,11 @@ export interface CreateTodoInput {
   description: string;
 }
 
+export interface CreateUserInput {
+  username: string;
+  password: string;
+}
+
 export interface DeleteTodoInput {
   todoId: string;
 }

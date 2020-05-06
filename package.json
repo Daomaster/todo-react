@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "start": "nodemon --ignore './front-end/' server.ts",
+    "start": "nodemon server.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

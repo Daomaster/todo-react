@@ -1,9 +1,10 @@
 import React from 'react';
 import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
-import LoginPage from './pages/LoginPage/LoginPage';
 import TodoPage from './pages/TodoPage/TodoPage';
 import { ApolloProvider } from '@apollo/react-hooks';
 import GraphQLClient from './lib/graphql/client';
+import SignupForm from './components/SignupForm/SignupForm';
+import LoginForm from './components/Login/LoginForm';
 
 function App() {
   const client = GraphQLClient;
@@ -14,7 +15,8 @@ function App() {
         <BrowserRouter>
           <Switch>
             <Redirect from="/" to="/login" exact />
-            <Route path="/login" component={LoginPage} />
+            <Route path="/login" component={LoginForm} />
+            <Route path="/signup" component={SignupForm} />
             <Route path="/todo" component={TodoPage} />
           </Switch>
         </BrowserRouter>

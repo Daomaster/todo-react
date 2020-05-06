@@ -1,24 +1,28 @@
 import React from 'react';
-import { useHistory } from 'react-router-dom';
-import styles from './LoginForm.module.less';
+import styles from '../Login/LoginForm.module.less';
 import { Button, Card, Form, Input } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
+import { useHistory } from 'react-router-dom';
 import { useMutation } from '@apollo/react-hooks';
-import { Login, LoginVariables } from '../../lib/graphql/types/Login';
-import { LOGIN } from '../../lib/graphql/query';
+import {
+  CreateUser,
+  CreateUserVariables,
+} from '../../lib/graphql/types/CreateUser';
+import { CREATE_USER } from '../../lib/graphql/query';
+import { CreateUserInput } from '../../../types/globalTypes';
 
-const LoginForm: React.FC = () => {
+const SignupForm: React.FC = () => {
   const history = useHistory();
   const usernameEl = React.createRef<Input>();
   const passwordEl = React.createRef<Input>();
-  const [login] = useMutation<Login, LoginVariables>(LOGIN, {
-    onCompleted({ login }) {
-      localStorage.setItem('token', login.token);
+  const [signup] = useMutation<CreateUser, CreateUserVariables>(CREATE_USER, {
+    onCompleted(login) {
+      localStorage.setItem('token', login.createUser.token);
       history.push('/todo');
     },
   });
 
-  const loginHandler = async (event: React.FormEvent) => {
+  const signupHandler = async (event: React.FormEvent) => {
     // prevent the default
     event.preventDefault();
 
@@ -29,16 +33,22 @@ const LoginForm: React.FC = () => {
     const username = usernameEl.current.input.value;
     const password = passwordEl.current.input.value;
 
-    await login({ variables: { username: username, password: password } });
+    // sign up with the credentials
+    const input: CreateUserInput = {
+      username: username,
+      password: password,
+    };
+
+    await signup({ variables: { createInput: input } });
   };
 
   return (
-    <div data-testid="Login">
+    <div data-testid="Signup">
       <Card className={styles.LoginContainer}>
         <Form
           name="normal_login"
           className={styles.LoginForm}
-          onSubmitCapture={loginHandler}
+          onSubmitCapture={signupHandler}
         >
           <Form.Item
             name="username"
@@ -68,9 +78,9 @@ const LoginForm: React.FC = () => {
               htmlType="submit"
               className={styles.LoginFormBtn}
             >
-              Log in
+              Sign up
             </Button>
-            Or <a href="/signup">register now!</a>
+            Or <a href="/login">already registered!</a>
           </Form.Item>
         </Form>
       </Card>
@@ -78,4 +88,4 @@ const LoginForm: React.FC = () => {
   );
 };
 
-export default LoginForm;
+export default SignupForm;
