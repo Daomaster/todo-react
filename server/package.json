@@ -5,6 +5,7 @@
   "main": "server.js",
   "scripts": {
     "lint:fix": "eslint --fix --ext .ts src/",
+    "start:prod": "ts-node server.ts",
     "start": "nodemon server.ts",
     "test": "jest"
   },
@@ -35,11 +36,7 @@
     "eslint": "^6.8.0",
     "eslint-config-airbnb-typescript": "^7.2.1",
     "eslint-plugin-import": "^2.20.1",
-    "graphql-depth-limit": "^1.1.0",
-    "graphql-import": "^1.0.2",
-    "graphql-import-node": "0.0.4",
     "jest": "^23.0.0",
-    "jsonwebtoken": "^8.5.1",
     "mongodb-memory-server": "^6.5.2",
     "nodemon": "^2.0.3",
     "ts-jest": "^23.10.0",
@@ -54,9 +51,13 @@
     "cors": "^2.8.5",
     "express": "^4.17.1",
     "graphql": "^15.0.0",
+    "graphql-depth-limit": "^1.1.0",
+    "graphql-import": "^1.0.2",
+    "graphql-import-node": "0.0.4",
     "graphql-resolvers": "^0.4.2",
     "graphql-tools": "^5.0.0",
     "http": "0.0.1-security",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.9.11",
     "ncp": "^2.0.0"
   }

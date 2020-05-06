@@ -1,0 +1,6 @@
+node_modules
+front-end
+src/tests
+.eslint*
+jest.config.js
+nodemon.json

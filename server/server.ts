@@ -31,3 +31,14 @@ mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true })
   .catch((err) => {
     console.log(err);
   });
+
+// graceful shutdown
+process.on('SIGINT', () => {
+  mongoose.disconnect().then(
+    () => {
+      process.exit(0);
+    },
+  ).catch(() => {
+    process.exit(1);
+  });
+});

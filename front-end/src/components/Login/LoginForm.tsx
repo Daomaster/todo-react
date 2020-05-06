@@ -1,9 +1,9 @@
 import React from 'react';
 import { useHistory } from 'react-router-dom';
-import styles from './LoginForm.module.less';
 import { Button, Card, Form, Input } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { useMutation } from '@apollo/react-hooks';
+import styles from './LoginForm.module.less';
 import { Login, LoginVariables } from '../../lib/graphql/types/Login';
 import { LOGIN } from '../../lib/graphql/query';
 
@@ -29,7 +29,7 @@ const LoginForm: React.FC = () => {
     const username = usernameEl.current.input.value;
     const password = passwordEl.current.input.value;
 
-    await login({ variables: { username: username, password: password } });
+    await login({ variables: { username, password } });
   };
 
   return (

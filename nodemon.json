@@ -1,9 +1,0 @@
-{
-  "ignore": ["front-end/**/*.*"],
-  "env": {
-    "MONGO_USER": "graphql",
-    "MONGO_PASSWORD": "zdy940717",
-    "MONGO_DB": "todo-react",
-    "JWT_SECRET": "my secret"
-  }
-}

@@ -1,0 +1,22 @@
+version: '2.1'
+
+services:
+  todo-ui:
+    image: daomaster/todo-client:latest
+    restart: on-failure
+    ports:
+      - "80:80"
+    depends_on:
+      transcribe-service:
+        condition: service_started
+
+  todo-service:
+    image: daomaster/todo-server:latest
+    restart: on-failure
+    environment:
+      - NODE_ENV=${ENVIORNMENT}
+      - MONGO_USER=${MONGO_USER}
+      - MONGO_PASSWORD=${MONGO_PASSWORD}
+      - MONGO_DB=${MONGO_DB}
+      - MYSQL_USER=${MYSQL_USER}
+      - JWT_SECRET=${JWT_SECRET}
