@@ -9,7 +9,7 @@ const GraphQLClient: ApolloClient<NormalizedCacheObject> = new ApolloClient({
     const token = localStorage.getItem('token');
     operation.setContext({
       headers: {
-        authorization: token ? token : '',
+        authorization: token ? `Bearer ${token}` : '',
       },
     });
   },
