@@ -20,6 +20,11 @@ export interface DeleteTodoInput {
   todoId: string;
 }
 
+export interface UpdateTodoInput {
+  todoId: string;
+  description: string;
+}
+
 //==============================================================
 // END Enums and Input Objects
 //==============================================================

@@ -41,3 +41,12 @@ export const DELETE_TODOS = gql`
     deleteTodo(deleteTodoInput: $deleteInput)
   }
 `;
+
+export const UPDATE_TODOS = gql`
+  mutation UpdateTodo($updateInput: UpdateTodoInput!) {
+    updateTodo(updateTodoInput: $updateInput) {
+      id
+      description
+    }
+  }
+`;

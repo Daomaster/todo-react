@@ -16,14 +16,9 @@ const AddTodo: React.FC<AddTodoProps> = ({ onAddTodo }) => {
   };
 
   return (
-    <Form
-      form={form}
-      onFinish={finishHandler}
-      layout="horizontal"
-      className="todo-form"
-    >
+    <Form form={form} onFinish={finishHandler} layout="horizontal">
       <Row gutter={20}>
-        <Col xs={24} sm={24} md={17} lg={19} xl={20}>
+        <Col xs={22} sm={22} md={15} lg={17} xl={20}>
           <Form.Item
             name={'description'}
             rules={[
@@ -36,7 +31,7 @@ const AddTodo: React.FC<AddTodoProps> = ({ onAddTodo }) => {
         <Col xs={24} sm={24} md={7} lg={5} xl={4}>
           <Button type="primary" htmlType="submit" block>
             <PlusCircleFilled />
-            Add todo
+            Add Todo
           </Button>
         </Col>
       </Row>

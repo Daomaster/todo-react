@@ -3,7 +3,12 @@ import TodoList from '../../components/TodoList/TodoList';
 import { useMutation, useQuery } from '@apollo/react-hooks';
 import { useHistory } from 'react-router-dom';
 import styles from './TodoPage.module.less';
-import { CREATE_TODOS, DELETE_TODOS, GET_TODOS } from '../../lib/graphql/query';
+import {
+  CREATE_TODOS,
+  DELETE_TODOS,
+  GET_TODOS,
+  UPDATE_TODOS,
+} from '../../lib/graphql/query';
 // TODO: fix the generator for the interface names
 // eslint-disable-next-line @typescript-eslint/camelcase
 import { Todos, Todos_todos } from '../../lib/graphql/types/Todos';
@@ -18,7 +23,15 @@ import {
   DeleteTodo,
   DeleteTodoVariables,
 } from '../../lib/graphql/types/DeleteTodo';
-import { CreateTodoInput, DeleteTodoInput } from '../../../types/globalTypes';
+import {
+  CreateTodoInput,
+  DeleteTodoInput,
+  UpdateTodoInput,
+} from '../../../types/globalTypes';
+import {
+  UpdateTodo,
+  UpdateTodoVariables,
+} from '../../lib/graphql/types/UpdateTodo';
 
 const TodoPage: React.FC = () => {
   const history = useHistory();
@@ -29,7 +42,9 @@ const TodoPage: React.FC = () => {
     history.push('/login');
   }
 
+  // query for query items
   const { data, loading, error } = useQuery<Todos>(GET_TODOS);
+  // mutation for delete item
   const [deleteTodo] = useMutation<DeleteTodo, DeleteTodoVariables>(
     DELETE_TODOS,
     {
@@ -39,12 +54,23 @@ const TodoPage: React.FC = () => {
       },
     }
   );
+  // mutation for add item
   const [createTodo] = useMutation<CreateTodo, CreateTodoVariables>(
     CREATE_TODOS,
     {
       refetchQueries: [{ query: GET_TODOS }],
       onCompleted() {
         console.log('The todo has been created');
+      },
+    }
+  );
+  // mutation for update item
+  const [updateTodo] = useMutation<UpdateTodo, UpdateTodoVariables>(
+    UPDATE_TODOS,
+    {
+      refetchQueries: [{ query: GET_TODOS }],
+      onCompleted() {
+        console.log('The todo has been updated');
       },
     }
   );
@@ -74,8 +100,13 @@ const TodoPage: React.FC = () => {
 
   // TODO: fix the generator for the interface names
   // eslint-disable-next-line @typescript-eslint/camelcase
-  const updateTodoHandler = (todo: Todos_todos) => {
-    console.log('update', todo);
+  const updateTodoHandler = async (todo: Todos_todos) => {
+    const input: UpdateTodoInput = {
+      todoId: todo.id,
+      description: todo.description,
+    };
+
+    await updateTodo({ variables: { updateInput: input } });
   };
 
   if (loading) return <p>Loading</p>;
