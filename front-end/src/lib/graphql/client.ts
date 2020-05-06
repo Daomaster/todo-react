@@ -3,8 +3,15 @@ import { NormalizedCacheObject } from 'apollo-cache-inmemory';
 
 const GraphQLClient: ApolloClient<NormalizedCacheObject> = new ApolloClient({
   uri: 'http://localhost:8000/graphql',
-  headers: {
-    authorization: localStorage.getItem('token'),
+  // this allows the each request to get the token from local storage
+  // not a good way to handle this but it works :)
+  request: (operation) => {
+    const token = localStorage.getItem('token');
+    operation.setContext({
+      headers: {
+        authorization: token ? token : '',
+      },
+    });
   },
 });
 

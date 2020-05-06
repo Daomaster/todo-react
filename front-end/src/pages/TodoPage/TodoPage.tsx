@@ -43,7 +43,7 @@ const TodoPage: React.FC = () => {
   }
 
   // query for query items
-  const { data, loading, error } = useQuery<Todos>(GET_TODOS);
+  const { client, data, loading, error } = useQuery<Todos>(GET_TODOS);
   // mutation for delete item
   const [deleteTodo] = useMutation<DeleteTodo, DeleteTodoVariables>(
     DELETE_TODOS,
@@ -75,8 +75,14 @@ const TodoPage: React.FC = () => {
     }
   );
 
-  const logoutHandler = () => {
-    localStorage.removeItem('auth');
+  const logoutHandler = async () => {
+    // this will force the apollo client to refecth
+    await client.clearStore();
+
+    // remove the token
+    localStorage.removeItem('token');
+
+    // redirect to login
     history.push('/login');
   };
 
