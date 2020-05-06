@@ -1,10 +1,9 @@
-import { IResolvers } from 'graphql-tools';
 import {
-  todos, createTodo, updateTodo, deleteTodo,
+  createTodo, deleteTodo, todos, updateTodo,
 } from './todo';
-import { login, createUser } from './auth';
+import { createUser, login } from './auth';
 
-const resolvers: IResolvers = {
+const resolvers: any = {
   Query: {
     todos,
   },

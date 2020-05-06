@@ -1,6 +1,7 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-
+import { combineResolvers } from 'graphql-resolvers';
+import { GraphQLContext } from '../context';
 import { User } from '../../models/userModel';
 
 // resolver to handle user auth related
@@ -20,23 +21,21 @@ interface UserArgs {
 }
 
 // temp placeholder for the jwt secret
-const secret = 'my jwt secret';
+const secret = '111';
 
 // login the user and return the auth data
-export const login = async (parent: any, args: ModifyUser) => {
+export const login = async (parent: any, args: ModifyUser, context: GraphQLContext) => {
   try {
-    const user = await User.findOne({ username: args.username });
+    const user = await context.Models.User.findOne({ username: args.username });
     // check if the user exist first
     if (!user) {
       throw new Error('User does not exist!');
-      return;
     }
 
     // check the hashed password
     const isEqual = await bcrypt.compare(args.password, user.password);
     if (!isEqual) {
       throw new Error('Password is incorrect!');
-      return;
     }
 
     // sign the jwt
@@ -60,19 +59,21 @@ export const login = async (parent: any, args: ModifyUser) => {
   }
 };
 
+
 // create a user in the db and login the user
-export const createUser = async (parent: any, args: UserArgs) => {
+export const createUser = async (parent: any, args: UserArgs, context: GraphQLContext) => {
   try {
-    const uniqueUser = await User.findOne({ username: args.createUserInput.username });
+    const uniqueUser = await context.Models.User.findOne(
+      { username: args.createUserInput.username },
+    );
     if (uniqueUser) {
       // user already exist
       throw new Error('User exists already.');
-      return;
     }
     // save the hashed password not in plain text :)
     const hashedPassword = await bcrypt.hash(args.createUserInput.password, 12);
 
-    const user = new User({
+    const user = new context.Models.User({
       username: args.createUserInput.username,
       password: hashedPassword,
     });

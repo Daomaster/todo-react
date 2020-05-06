@@ -2,11 +2,11 @@ import React from 'react';
 import { cleanup } from '@testing-library/react';
 import TestRenderer from 'react-test-renderer';
 import '@testing-library/jest-dom/extend-expect';
-import TodoPage from './TodoPage';
-import MatchMediaMock from '../../test/matchMediaMock';
 import { createMemoryHistory } from 'history';
 import { MockedProvider } from '@apollo/react-testing';
 import { Router } from 'react-router-dom';
+import MatchMediaMock from '../../test/matchMediaMock';
+import TodoPage from './TodoPage';
 import { DeleteTodoVariables } from '../../lib/graphql/types/DeleteTodo';
 import {
   UpdateTodo,
@@ -27,8 +27,8 @@ import {
 function populateTodo(id: string, description: string): Todos_todos {
   return {
     __typename: 'Todo',
-    id: id,
-    description: description,
+    id,
+    description,
   };
 }
 
@@ -38,7 +38,7 @@ describe('<TodoPage />', () => {
   afterEach(cleanup);
 
   test('it should mount', () => {
-    // TODO: Implement the test for todo page
+    // TODO: Implement the tests for todo page
     // const mockDeleteVariables: DeleteTodoVariables = {
     //   deleteInput: { todoId: '1' },
     // };
