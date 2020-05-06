@@ -4,12 +4,12 @@ import { GraphQLContext } from '../context';
 
 // resolver to handle user auth related
 
-interface AuthData {
+export interface AuthData {
   userId: string;
   token: string;
 }
 
-interface ModifyUser {
+export interface ModifyUser {
   username: string;
   password: string;
 }

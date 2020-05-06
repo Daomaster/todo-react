@@ -3,7 +3,7 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import compression from 'compression';
 import { ApolloServer } from 'apollo-server-express';
-import apolloConfig from './src/graphql';
+import ApolloConfig from './src/graphql';
 
 const app = express();
 
@@ -12,7 +12,7 @@ app.use('*', cors());
 app.use(compression());
 
 // init the apollo server
-const server = new ApolloServer(apolloConfig);
+const server = new ApolloServer(ApolloConfig);
 server.applyMiddleware({ app });
 
 // construct the mongo connection string

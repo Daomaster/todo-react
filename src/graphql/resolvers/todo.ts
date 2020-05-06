@@ -3,7 +3,7 @@ import { GraphQLContext, isAuthenticated } from '../context';
 
 // resolver to handle todos related
 
-interface ModifyTodoInput{
+export interface ModifyTodoInput{
   todoId: string;
   description: string;
 }

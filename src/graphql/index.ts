@@ -3,7 +3,7 @@ import resolvers from './resolvers';
 import typeDefs from './schemas';
 import { contextHandler } from './context';
 
-const apolloConfig: ApolloServerExpressConfig = {
+const ApolloConfig: ApolloServerExpressConfig = {
   typeDefs,
   resolvers,
   introspection: true,
@@ -11,4 +11,4 @@ const apolloConfig: ApolloServerExpressConfig = {
   playground: process.env.NODE_ENV !== 'production',
 };
 
-export default apolloConfig;
+export default ApolloConfig;

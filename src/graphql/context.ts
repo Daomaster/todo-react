@@ -17,6 +17,7 @@ export interface GraphQLContext {
 const secret = `${process.env.JWT_SECRET}`;
 
 const getAuth = (req: any) => {
+  if (!req) return;
   let token = req.headers.authorization;
 
   if (token) {
