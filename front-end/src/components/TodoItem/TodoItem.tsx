@@ -2,24 +2,16 @@ import React, { useState } from 'react';
 import styles from './TodoItem.module.less';
 import { Button, Col, Form, Input, List, Popconfirm, Row } from 'antd';
 import {
-  DeleteOutlined,
-  EditOutlined,
   CheckOutlined,
   CloseOutlined,
+  DeleteOutlined,
+  EditOutlined,
 } from '@ant-design/icons';
-// TODO: fix the generator for the interface names
-// eslint-disable-next-line @typescript-eslint/camelcase
 import { Todos_todos } from '../../lib/graphql/types/Todos';
 
 interface TodoItemProps {
-  // TODO: fix the generator for the interface names
-  // eslint-disable-next-line @typescript-eslint/camelcase
   todo: Todos_todos | null;
-  // TODO: fix the generator for the interface names
-  // eslint-disable-next-line @typescript-eslint/camelcase
   onRemoveTodo: (todo: Todos_todos) => void;
-  // TODO: fix the generator for the interface names
-  // eslint-disable-next-line @typescript-eslint/camelcase
   onUpdateTodo: (todo: Todos_todos) => void;
 }
 
@@ -97,40 +89,42 @@ const TodoItem: React.FC<TodoItemProps> = ({
   ];
 
   return (
-    <List.Item
-      actions={editMode ? editModeActions : normalModeActions}
-      key={todo?.id}
-    >
-      <Row gutter={20} className={styles.EditTodoRow}>
-        <Col xs={25} sm={25} md={18} lg={20} xl={21}>
-          {editMode ? (
-            <Form form={form} layout="horizontal">
-              <Form.Item
-                className={styles.EditInput}
-                name={'description'}
-                rules={[
-                  {
-                    required: true,
-                    message: 'You need to have a actual todo :)',
-                  },
-                ]}
-              >
-                <Input
-                  autoFocus={true}
-                  onPressEnter={() => {
-                    updateTodoHandler(todo);
-                  }}
-                  placeholder={todo?.description}
-                  ref={descriptionEl}
-                />
-              </Form.Item>
-            </Form>
-          ) : (
-            <span>{todo?.description}</span>
-          )}
-        </Col>
-      </Row>
-    </List.Item>
+    <div data-testid={'TodoItem'}>
+      <List.Item
+        actions={editMode ? editModeActions : normalModeActions}
+        key={todo?.id}
+      >
+        <Row gutter={20} className={styles.EditTodoRow}>
+          <Col xs={25} sm={25} md={18} lg={20} xl={21}>
+            {editMode ? (
+              <Form form={form} layout="horizontal">
+                <Form.Item
+                  className={styles.EditInput}
+                  name={'description'}
+                  rules={[
+                    {
+                      required: true,
+                      message: 'You need to have a actual todo :)',
+                    },
+                  ]}
+                >
+                  <Input
+                    autoFocus={true}
+                    onPressEnter={() => {
+                      updateTodoHandler(todo);
+                    }}
+                    placeholder={todo?.description}
+                    ref={descriptionEl}
+                  />
+                </Form.Item>
+              </Form>
+            ) : (
+              <span>{todo?.description}</span>
+            )}
+          </Col>
+        </Row>
+      </List.Item>
+    </div>
   );
 };
 

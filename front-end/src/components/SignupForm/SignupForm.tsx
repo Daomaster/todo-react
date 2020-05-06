@@ -43,7 +43,7 @@ const SignupForm: React.FC = () => {
   };
 
   return (
-    <div data-testid="Signup">
+    <div data-testid="SignupForm">
       <Card className={styles.LoginContainer}>
         <Form
           name="normal_login"

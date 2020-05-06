@@ -11,7 +11,7 @@ const LoginForm: React.FC = () => {
   const history = useHistory();
   const usernameEl = React.createRef<Input>();
   const passwordEl = React.createRef<Input>();
-  const [login] = useMutation<Login, LoginVariables>(LOGIN, {
+  const [login, loading] = useMutation<Login, LoginVariables>(LOGIN, {
     onCompleted({ login }) {
       localStorage.setItem('token', login.token);
       history.push('/todo');
@@ -64,6 +64,7 @@ const LoginForm: React.FC = () => {
 
           <Form.Item>
             <Button
+              loading={loading ? loading.loading : false}
               type="primary"
               htmlType="submit"
               className={styles.LoginFormBtn}

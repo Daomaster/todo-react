@@ -28,7 +28,7 @@ const TodoList: React.FC<TodoListProps> = ({
   if (!todos) return <p>You do not have any todos, go add one :)</p>;
 
   return (
-    <div>
+    <div data-testid={'TodoList'}>
       <List
         dataSource={todos}
         /* eslint-disable-next-line @typescript-eslint/camelcase */

@@ -9,8 +9,6 @@ import {
   GET_TODOS,
   UPDATE_TODOS,
 } from '../../lib/graphql/query';
-// TODO: fix the generator for the interface names
-// eslint-disable-next-line @typescript-eslint/camelcase
 import { Todos, Todos_todos } from '../../lib/graphql/types/Todos';
 import { Card, Button, Row, Col, Tooltip } from 'antd';
 import { PoweroffOutlined } from '@ant-design/icons';
@@ -94,8 +92,6 @@ const TodoPage: React.FC = () => {
     await createTodo({ variables: { createInput: input } });
   };
 
-  // TODO: fix the generator for the interface names
-  // eslint-disable-next-line @typescript-eslint/camelcase
   const removeTodoHandler = async (todo: Todos_todos) => {
     const input: DeleteTodoInput = {
       todoId: todo.id,
@@ -104,8 +100,6 @@ const TodoPage: React.FC = () => {
     await deleteTodo({ variables: { deleteInput: input } });
   };
 
-  // TODO: fix the generator for the interface names
-  // eslint-disable-next-line @typescript-eslint/camelcase
   const updateTodoHandler = async (todo: Todos_todos) => {
     const input: UpdateTodoInput = {
       todoId: todo.id,
