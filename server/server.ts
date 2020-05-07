@@ -1,15 +1,15 @@
 import express from 'express';
 import cors from 'cors';
 import mongoose from 'mongoose';
-import compression from 'compression';
 import { ApolloServer } from 'apollo-server-express';
 import ApolloConfig from './src/graphql';
 
 const app = express();
 
 // add all the middleware
-app.use('*', cors());
-app.use(compression());
+if (process.env.NODE_ENV !== 'production') {
+  app.use('*', cors());
+}
 
 // init the apollo server
 const server = new ApolloServer(ApolloConfig);
