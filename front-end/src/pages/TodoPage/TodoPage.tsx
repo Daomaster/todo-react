@@ -41,7 +41,7 @@ const TodoPage: React.FC = () => {
   }
 
   // query for query items
-  const { client, data, loading, error } = useQuery<Todos>(GET_TODOS);
+  const { client, data, loading } = useQuery<Todos>(GET_TODOS);
   // mutation for delete item
   const [deleteTodo] = useMutation<DeleteTodo, DeleteTodoVariables>(
     DELETE_TODOS,
@@ -85,6 +85,8 @@ const TodoPage: React.FC = () => {
   };
 
   const addTodoHandler = async (description: string) => {
+    const hideLoading = message.loading('Adding todo ...');
+
     const input: CreateTodoInput = {
       description: description,
     };
@@ -94,9 +96,13 @@ const TodoPage: React.FC = () => {
     } catch (e) {
       console.log(e);
     }
+
+    hideLoading();
   };
 
   const removeTodoHandler = async (todo: Todos_todos) => {
+    const hideLoading = message.loading('Removing todo ...');
+
     const input: DeleteTodoInput = {
       todoId: todo.id,
     };
@@ -106,9 +112,13 @@ const TodoPage: React.FC = () => {
     } catch (e) {
       console.log(e);
     }
+
+    hideLoading();
   };
 
   const updateTodoHandler = async (todo: Todos_todos) => {
+    const hideLoading = message.loading('Updating todo ...');
+
     const input: UpdateTodoInput = {
       todoId: todo.id,
       description: todo.description,
@@ -119,6 +129,8 @@ const TodoPage: React.FC = () => {
     } catch (e) {
       console.log(e);
     }
+
+    hideLoading();
   };
 
   return (
