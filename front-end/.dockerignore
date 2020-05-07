@@ -2,3 +2,4 @@ node_modules
 .eslintrc.json
 generate-react-cli.json
 apollo.config.js
+build

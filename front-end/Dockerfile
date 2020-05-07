@@ -7,6 +7,6 @@ FROM nginx:alpine
 # delete the default html from nginx image
 RUN rm -rf /usr/share/nginx/html/*
 COPY nginx /etc/nginx/conf.d
-COPY --from=frontend-builder /app/build/static /usr/share/nginx/html
+COPY --from=frontend-builder /app/build /usr/share/nginx/html
 CMD ["nginx", "-g", "daemon off;"]
 EXPOSE 80

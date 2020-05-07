@@ -18,7 +18,7 @@ server.applyMiddleware({ app });
 // construct the mongo connection string
 const mongoUrl = `mongodb+srv://${process.env.MONGO_USER}:${
   process.env.MONGO_PASSWORD
-}@cluster0-replz.gcp.mongodb.net/${process.env.MONGO_DB}?retryWrites=true&w=majority`;
+}@${process.env.MONGO_SERVER}/${process.env.MONGO_DB}?retryWrites=true&w=majority`;
 
 // init the mongo connection
 mongoose.connect(mongoUrl, { useNewUrlParser: true, useUnifiedTopology: true })
