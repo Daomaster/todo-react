@@ -1,36 +1,15 @@
 import React from 'react';
 import { cleanup } from '@testing-library/react';
-import TestRenderer from 'react-test-renderer';
 import '@testing-library/jest-dom/extend-expect';
-import { createMemoryHistory } from 'history';
-import { MockedProvider } from '@apollo/react-testing';
-import { Router } from 'react-router-dom';
 import MatchMediaMock from '../../test/matchMediaMock';
-import TodoPage from './TodoPage';
-import { DeleteTodoVariables } from '../../lib/graphql/types/DeleteTodo';
-import {
-  UpdateTodo,
-  UpdateTodoVariables,
-} from '../../lib/graphql/types/UpdateTodo';
-import {
-  CreateTodo,
-  CreateTodoVariables,
-} from '../../lib/graphql/types/CreateTodo';
-import { Todos, Todos_todos } from '../../lib/graphql/types/Todos';
-import {
-  CREATE_TODOS,
-  DELETE_TODOS,
-  GET_TODOS,
-  UPDATE_TODOS,
-} from '../../lib/graphql/query';
 
-function populateTodo(id: string, description: string): Todos_todos {
-  return {
-    __typename: 'Todo',
-    id,
-    description,
-  };
-}
+// function populateTodo(id: string, description: string): Todos_todos {
+//   return {
+//     __typename: 'Todo',
+//     id,
+//     description,
+//   };
+// }
 
 describe('<TodoPage />', () => {
   beforeAll(MatchMediaMock);
@@ -38,6 +17,7 @@ describe('<TodoPage />', () => {
   afterEach(cleanup);
 
   test('it should mount', () => {
+    // Did not figure out a way to make this test work :(
     // TODO: Implement the tests for todo page
     // const mockDeleteVariables: DeleteTodoVariables = {
     //   deleteInput: { todoId: '1' },
@@ -110,7 +90,7 @@ describe('<TodoPage />', () => {
     // const history = createMemoryHistory();
     //
     // TestRenderer.create(
-    //   <MockedProvider mocks={mocks} addTypename={false}>
+    //   <MockedProvider mocks={[]} addTypename={false}>
     //     <Router history={history}>
     //       <TodoPage />
     //     </Router>

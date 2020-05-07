@@ -10,7 +10,7 @@ describe('<TodoList />', () => {
 
   afterEach(cleanup);
 
-  test('it should mount', () => {
+  test('it should mount', async () => {
     const mockUpdateTodo = jest.fn();
     const mockDeleteTodo = jest.fn();
 
@@ -29,12 +29,12 @@ describe('<TodoList />', () => {
         todos={mockTodos}
       />
     );
-    const todoList = getByTestId('TodoList');
+    const todoList = await getByTestId('TodoList');
 
     expect(todoList).toBeInTheDocument();
   });
 
-  test('it should render multiple todo item', () => {
+  test('it should render multiple todo item', async () => {
     const mockUpdateTodo = jest.fn();
     const mockDeleteTodo = jest.fn();
 
@@ -59,10 +59,10 @@ describe('<TodoList />', () => {
       />
     );
 
-    const todoList = getByTestId('TodoList');
+    const todoList = await getByTestId('TodoList');
     expect(todoList).toBeInTheDocument();
 
-    const todoItems = getAllByTestId('TodoItem');
+    const todoItems = await getAllByTestId('TodoItem');
     expect(todoItems.length).toBe(mockTodos.length);
   });
 });

@@ -9,10 +9,10 @@ describe('<AddTodo />', () => {
 
   afterEach(cleanup);
 
-  test('it should mount', () => {
+  test('it should mount', async () => {
     const mockAddTodo = jest.fn();
     const { getByTestId } = render(<AddTodo onAddTodo={mockAddTodo} />);
-    const addTodo = getByTestId('AddTodo');
+    const addTodo = await getByTestId('AddTodo');
 
     expect(addTodo).toBeInTheDocument();
   });

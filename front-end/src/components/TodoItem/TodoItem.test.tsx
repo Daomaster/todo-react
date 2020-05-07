@@ -10,7 +10,7 @@ describe('<TodoItem />', () => {
 
   afterEach(cleanup);
 
-  test('it should mount', () => {
+  test('it should mount', async () => {
     const mockUpdateTodo = jest.fn();
     const mockDeleteTodo = jest.fn();
 
@@ -27,12 +27,12 @@ describe('<TodoItem />', () => {
         todo={mockTodo}
       />
     );
-    const todo = getByTestId('TodoItem');
+    const todo = await getByTestId('TodoItem');
 
     expect(todo).toBeInTheDocument();
   });
 
-  test('it should show the proper description', () => {
+  test('it should show the proper description', async () => {
     const mockUpdateTodo = jest.fn();
     const mockDeleteTodo = jest.fn();
 
@@ -49,7 +49,7 @@ describe('<TodoItem />', () => {
         todo={mockTodo}
       />
     );
-    const todo = getByTestId('TodoItem');
+    const todo = await getByTestId('TodoItem');
     expect(todo).toBeInTheDocument();
 
     const descriptionEl = document.querySelector('span');

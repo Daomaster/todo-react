@@ -17,7 +17,7 @@ describe('<SignupForm />', () => {
 
   afterEach(cleanup);
 
-  test('it should mount', () => {
+  test('it should mount', async () => {
     const mockSignupVariables: CreateUserVariables = {
       createInput: {
         username: 'username',
@@ -54,7 +54,7 @@ describe('<SignupForm />', () => {
         </Router>
       </MockedProvider>
     );
-    const signupForm = getByTestId('SignupForm');
+    const signupForm = await getByTestId('SignupForm');
 
     expect(signupForm).toBeInTheDocument();
   });
