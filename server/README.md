@@ -3,7 +3,7 @@
 This is a project built with Node.js Express.js and Mongoose.
 
 ### Run the application
-###`npm run start`
+### `npm run start`
 
 #### Before you start
 create a file `nodemon.json` and add the following configuration
@@ -25,7 +25,7 @@ Run the development mode of the application, under the hood it uses `nodemon`
 By default, in development mode server is running on port `8000`
 
 ### Run the test
-###`npm run test`
+### `npm run test`
 
 Launches all tests in the `tests` folder, currently there are some basic integration
 test for the two entities, basically simulate user behaviors. 
