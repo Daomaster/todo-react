@@ -5,6 +5,20 @@ This is a project built with Node.js Express.js and Mongoose.
 ### Run the application
 ###`npm run start`
 
+#### Before you start
+create a file `nodemon.json` and add the following configuration
+```json
+{
+  "env": {
+    "MONGO_USER": "Mongo username",
+    "MONGO_PASSWORD": "Mongo password",
+    "MONGO_DB": "Mongo database",
+    "MONGO_SERVER": "Mongo server hostname",
+    "JWT_SECRET": "Your secret :)"
+  }
+}
+```
+
 Run the development mode of the application, under the hood it uses `nodemon`
 , so it will watch your file change and reload the application automatically.
 
