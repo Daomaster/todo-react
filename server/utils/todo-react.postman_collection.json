@@ -1,0 +1,226 @@
+{
+	"info": {
+		"_postman_id": "60beda4f-55e9-4b6d-9825-46e8f26dcbdc",
+		"name": "todo-react",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "createTodo",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation CreateTodo($createInput: CreateTodoInput!) {\r\n    createTodo(createTodoInput: $createInput) {\r\n      id\r\n      description\r\n    }\r\n  }",
+						"variables": "{\n\t\"createInput\": {\n\t\t\"description\": \"This is a test from postman\"\n\t}\n}"
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "todos",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query {\n    todos {\n        id,\n        description\n    }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "login",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "8c81bce5-6226-4d74-943e-702a82f649bd",
+						"exec": [
+							"var res = JSON.parse(responseBody);",
+							"",
+							"postman.setEnvironmentVariable(\"jwt\",res.data.login.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": " mutation Login($username: String!, $password: String!) {\r\n    login(username: $username, password: $password) {\r\n      userId\r\n      token\r\n    }\r\n  }",
+						"variables": "{\n\t\"username\": \"test123\",\n\t\"password\": \"password\"\n}"
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateTodo",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation UpdateTodo($updateInput: UpdateTodoInput!) {\r\n    updateTodo(updateTodoInput: $updateInput) {\r\n      id\r\n      description\r\n    }\r\n  }",
+						"variables": "{\n\t\"updateInput\": {\n\t\t\"todoId\": \"5eb038d4d81b0b88bc46c437\",\n\t\t\"description\": \"This is an update from postman\"\n\t}\n}"
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteTodo",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{jwt}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation DeleteTodo($deleteInput: DeleteTodoInput!) {\r\n    deleteTodo(deleteTodoInput: $deleteInput)\r\n  }",
+						"variables": "{\n\t\"deleteInput\": {\n\t\t\"todoId\": \"5eb37f4a1cec6a42bcf52e62\"\n\t}\n}"
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "createUser",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "  mutation CreateUser($createInput: CreateUserInput!) {\r\n    createUser(createUserInput: $createInput) {\r\n      userId\r\n      token\r\n    }\r\n  }",
+						"variables": "{\n\t\"createInput\": {\n\t\t\"username\": \"test555\",\n\t\t\"password\": \"123456\"\n\t}\n}"
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/graphql",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

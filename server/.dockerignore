@@ -4,3 +4,4 @@ src/tests
 .eslint*
 jest.config.js
 nodemon.json
+utils

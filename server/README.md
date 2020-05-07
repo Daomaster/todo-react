@@ -22,7 +22,8 @@ create a file `nodemon.json` and add the following configuration
 Run the development mode of the application, under the hood it uses `nodemon`
 , so it will watch your file change and reload the application automatically.
 
-By default, in development mode server is running on port `8000`
+By default, in development mode server is running on port `8000`, there is a postman collection
+which located in `/utils/todo-react.postman_collection.json`
 
 ### Run the test
 ### `npm run test`
