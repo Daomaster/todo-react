@@ -9,7 +9,7 @@ import MatchMediaMock from '../../test/matchMediaMock';
 import { LOGIN } from '../../lib/graphql/query';
 import { Login } from '../../lib/graphql/types/Login';
 
-describe('<Login />', () => {
+describe('<LoginForm />', () => {
   beforeAll(MatchMediaMock);
 
   afterEach(cleanup);
@@ -63,7 +63,7 @@ describe('<Login />', () => {
   //     </MockedProvider>
   //   );
   //
-  //   const login = getByTestId('Login');
+  //   const login = getByTestId('LoginForm');
   //   expect(login).toBeInTheDocument();
   //
   //   const loginBtn = document.querySelector<HTMLButtonElement>('button');

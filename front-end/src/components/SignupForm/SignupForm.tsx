@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../Login/LoginForm.module.less';
+import styles from '../LoginForm/LoginForm.module.less';
 import { Button, Card, Form, Input } from 'antd';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';

@@ -4,7 +4,7 @@ import TodoPage from './pages/TodoPage/TodoPage';
 import { ApolloProvider } from '@apollo/react-hooks';
 import GraphQLClient from './lib/graphql/client';
 import SignupForm from './components/SignupForm/SignupForm';
-import LoginForm from './components/Login/LoginForm';
+import LoginForm from './components/LoginForm/LoginForm';
 
 function App() {
   const client = GraphQLClient;

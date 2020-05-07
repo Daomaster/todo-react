@@ -4,7 +4,7 @@
 // This file was automatically generated and should not be edited.
 
 // ====================================================
-// GraphQL mutation operation: Login
+// GraphQL mutation operation: LoginForm
 // ====================================================
 
 export interface Login_login {
