@@ -10,7 +10,7 @@ import {
   UPDATE_TODOS,
 } from '../../lib/graphql/query';
 import { Todos, Todos_todos } from '../../lib/graphql/types/Todos';
-import { Card, Button, Row, Col, Tooltip } from 'antd';
+import { Card, Button, Row, Col, Tooltip, message, Spin } from 'antd';
 import { PoweroffOutlined } from '@ant-design/icons';
 import AddTodo from '../../components/AddTodo/AddTodo';
 import {
@@ -48,7 +48,7 @@ const TodoPage: React.FC = () => {
     {
       refetchQueries: [{ query: GET_TODOS }],
       onCompleted() {
-        console.log('The todo has been deleted');
+        message.success('Todo has been deleted', 1);
       },
     }
   );
@@ -58,7 +58,7 @@ const TodoPage: React.FC = () => {
     {
       refetchQueries: [{ query: GET_TODOS }],
       onCompleted() {
-        console.log('The todo has been created');
+        message.success('Todo has been created', 1);
       },
     }
   );
@@ -68,7 +68,7 @@ const TodoPage: React.FC = () => {
     {
       refetchQueries: [{ query: GET_TODOS }],
       onCompleted() {
-        console.log('The todo has been updated');
+        message.success('Todo has been updated', 1);
       },
     }
   );
@@ -109,7 +109,6 @@ const TodoPage: React.FC = () => {
     await updateTodo({ variables: { updateInput: input } });
   };
 
-  if (loading) return <p>Loading</p>;
   if (error) return <p>ERROR</p>;
   if (!data) return <p>Not found</p>;
 
@@ -136,11 +135,15 @@ const TodoPage: React.FC = () => {
         <div className={styles.AddContainer}>
           <AddTodo onAddTodo={addTodoHandler} />
         </div>
-        <TodoList
-          todos={data.todos}
-          onRemoveTodo={removeTodoHandler}
-          onUpdateTodo={updateTodoHandler}
-        />
+        {loading ? (
+          <Spin tip="Loading..." />
+        ) : (
+          <TodoList
+            todos={data.todos}
+            onRemoveTodo={removeTodoHandler}
+            onUpdateTodo={updateTodoHandler}
+          />
+        )}
       </Card>
     </div>
   );
