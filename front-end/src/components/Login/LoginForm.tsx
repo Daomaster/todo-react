@@ -8,63 +8,63 @@ import { Login, LoginVariables } from '../../lib/graphql/types/Login';
 import { LOGIN } from '../../lib/graphql/query';
 
 const LoginForm: React.FC = () => {
+  const [form] = Form.useForm();
   const history = useHistory();
-  const usernameEl = React.createRef<Input>();
-  const passwordEl = React.createRef<Input>();
-  const [login, loading] = useMutation<Login, LoginVariables>(LOGIN, {
-    onCompleted({ login }) {
-      localStorage.setItem('token', login.token);
-      history.push('/todo');
-    },
-  });
-
-  const loginHandler = async (event: React.FormEvent) => {
-    // prevent the default
-    event.preventDefault();
-
-    if (!usernameEl.current || !passwordEl.current) {
-      return;
+  const [login, { loading, error }] = useMutation<Login, LoginVariables>(
+    LOGIN,
+    {
+      onCompleted({ login }) {
+        localStorage.setItem('token', login.token);
+        history.push('/todo');
+      },
     }
+  );
 
-    const username = usernameEl.current.input.value;
-    const password = passwordEl.current.input.value;
+  const loginHandler = async () => {
+    const username = form.getFieldValue('username');
+    const password = form.getFieldValue('password');
 
-    await login({ variables: { username, password } });
+    try {
+      await login({ variables: { username, password } });
+    } catch (e) {
+      console.log(e.message);
+    }
   };
 
   return (
     <div data-testid="Login">
       <Card className={styles.LoginContainer}>
         <Form
-          name="normal_login"
+          name="login"
+          form={form}
           className={styles.LoginForm}
-          onSubmitCapture={loginHandler}
+          onFinish={loginHandler}
         >
           <Form.Item
             name="username"
+            validateStatus={error ? 'error' : ''}
             rules={[{ required: true, message: 'Please input your Username!' }]}
           >
             <Input
               prefix={<UserOutlined className="site-form-item-icon" />}
               placeholder="Username"
-              ref={usernameEl}
             />
           </Form.Item>
           <Form.Item
             name="password"
+            validateStatus={error ? 'error' : ''}
             rules={[{ required: true, message: 'Please input your Password!' }]}
           >
             <Input
               prefix={<LockOutlined className="site-form-item-icon" />}
               type="password"
               placeholder="Password"
-              ref={passwordEl}
             />
           </Form.Item>
 
           <Form.Item>
             <Button
-              loading={loading ? loading.loading : false}
+              loading={loading ? loading : false}
               type="primary"
               htmlType="submit"
               className={styles.LoginFormBtn}
