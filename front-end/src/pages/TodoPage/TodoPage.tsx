@@ -89,7 +89,11 @@ const TodoPage: React.FC = () => {
       description: description,
     };
 
-    await createTodo({ variables: { createInput: input } });
+    try {
+      await createTodo({ variables: { createInput: input } });
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const removeTodoHandler = async (todo: Todos_todos) => {
@@ -97,7 +101,11 @@ const TodoPage: React.FC = () => {
       todoId: todo.id,
     };
 
-    await deleteTodo({ variables: { deleteInput: input } });
+    try {
+      await deleteTodo({ variables: { deleteInput: input } });
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const updateTodoHandler = async (todo: Todos_todos) => {
@@ -106,11 +114,12 @@ const TodoPage: React.FC = () => {
       description: todo.description,
     };
 
-    await updateTodo({ variables: { updateInput: input } });
+    try {
+      await updateTodo({ variables: { updateInput: input } });
+    } catch (e) {
+      console.log(e);
+    }
   };
-
-  if (error) return <p>ERROR</p>;
-  if (!data) return <p>Not found</p>;
 
   return (
     <div data-testid="TodoPage">
@@ -135,7 +144,7 @@ const TodoPage: React.FC = () => {
         <div className={styles.AddContainer}>
           <AddTodo onAddTodo={addTodoHandler} />
         </div>
-        {loading ? (
+        {loading || !data ? (
           <Spin tip="Loading..." />
         ) : (
           <TodoList
