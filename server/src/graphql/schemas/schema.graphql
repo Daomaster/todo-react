@@ -10,6 +10,11 @@ type Mutation {
     login(username: String!, password: String!): AuthData!
 }
 
+type Subscription {
+    todoUpdated: Todo
+    userUpdated: User
+}
+
 type Todo {
     id: String!
     description: String!

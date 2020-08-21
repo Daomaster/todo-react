@@ -7,7 +7,7 @@ import ApolloConfig from '../graphql';
 import {
   CREATE_TODOS, DELETE_TODOS, GET_TODOS, UPDATE_TODOS,
 } from './query';
-import { ModifyUser } from '../graphql/resolvers/auth';
+import { ModifyUser } from '../graphql/resolvers/user';
 import { createUser } from './user.test';
 import { UserData } from '../graphql/context';
 import CreateTestApolloConfig from './testConfig';

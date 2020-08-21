@@ -1,5 +1,8 @@
 import { combineResolvers } from 'graphql-resolvers';
 import { GraphQLContext, isAuthenticated } from '../context';
+import { pubsub, TodoUpdated } from '../subscription/pubsub';
+import { withFilter } from 'apollo-server';
+import { TodoModel } from '../../models/todoModel';
 
 // resolver to handle todos related
 
@@ -30,7 +33,7 @@ export const todos = combineResolvers(
 // create a item for the specified user
 export const createTodo = combineResolvers(
   isAuthenticated,
-  async (parent: any, args: TodoArgs, context: GraphQLContext) => {
+  async (__, args: TodoArgs, context: GraphQLContext) => {
     const todo = new context.Models.Todo({
       user: context.Auth.userId,
       description: args.createTodoInput.description,
@@ -46,7 +49,7 @@ export const createTodo = combineResolvers(
 // update an item
 export const updateTodo = combineResolvers(
   isAuthenticated,
-  async (parent: any, args: TodoArgs, context: GraphQLContext) => {
+  async (__, args: TodoArgs, context: GraphQLContext) => {
     try {
       // firstly find the todos
       const todo = await context.Models.Todo.findOne({
@@ -63,7 +66,12 @@ export const updateTodo = combineResolvers(
       todo.description = args.updateTodoInput.description;
 
       // return the saved item
-      return await todo.save();
+      await todo.save();
+
+      // publish the updated todo to the event
+      context.Pubsub.publish(TodoUpdated, {todoUpdated: todo});
+
+      return todo;
     } catch (e) {
       throw new Error(e);
     }
@@ -73,7 +81,7 @@ export const updateTodo = combineResolvers(
 // delete an item
 export const deleteTodo = combineResolvers(
   isAuthenticated,
-  async (parent: any, args: TodoArgs, context: GraphQLContext) => {
+  async (__, args: TodoArgs, context: GraphQLContext) => {
     try {
       // firstly find the todos
       const todo = await context.Models.Todo.findOne({
@@ -96,3 +104,14 @@ export const deleteTodo = combineResolvers(
     }
   },
 );
+
+//resolver for the subscription when todo updated
+export const todoUpdated = {
+      subscribe: withFilter(
+        () => pubsub.asyncIterator(TodoUpdated),
+         // every time the event fire
+        (payload, {contextId}): boolean => {
+          return false
+        },
+      )
+};

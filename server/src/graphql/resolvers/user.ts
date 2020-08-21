@@ -1,6 +1,8 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { GraphQLContext } from '../context';
+import { GraphQLContext, isAuthenticated } from '../context';
+import { combineResolvers } from 'graphql-resolvers';
+import { pubsub, UserUpdated } from '../subscription/pubsub';
 
 // resolver to handle user auth related
 
@@ -98,3 +100,8 @@ export const createUser = async (parent: any, args: UserArgs, context: GraphQLCo
     throw new Error(e);
   }
 };
+
+//resolver for the subscription when user updated
+export const userUpdated = {
+    subscribe: () => pubsub.asyncIterator(UserUpdated)
+  };

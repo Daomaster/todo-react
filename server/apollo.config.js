@@ -1,5 +1,3 @@
-module.exports = {
-  service: {
-    localSchemaFile: './src/graphql/schemas/schema.graphql',
-  },
+export const service = {
+  localSchemaFile: './src/graphql/schemas/schema.graphql',
 };

@@ -5,7 +5,7 @@ import { ApolloServerTestClient, createTestClient } from 'apollo-server-testing'
 import { GraphQLResponse } from 'apollo-server-types';
 import ApolloConfig from '../graphql';
 import { CREATE_USER, LOGIN } from './query';
-import { AuthData, ModifyUser } from '../graphql/resolvers/auth';
+import { AuthData, ModifyUser } from '../graphql/resolvers/user';
 
 interface CreateUserRes {
   createUser: AuthData;

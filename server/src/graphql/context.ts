@@ -1,8 +1,9 @@
-import jwt from 'jsonwebtoken';
 import { ForbiddenError } from 'apollo-server';
-import { AuthenticationError } from 'apollo-server-express';
+import { PubSub } from 'apollo-server-express';
 import { skip } from 'graphql-resolvers';
 import Models, { MongoModels } from '../models';
+import { pubsub } from './subscription/pubsub';
+import { getAuth } from './auth';
 
 export interface UserData {
   username: string;
@@ -12,33 +13,13 @@ export interface UserData {
 export interface GraphQLContext {
   Models: MongoModels;
   Auth: UserData;
+  Pubsub: PubSub;
 }
 
-const secret = `${process.env.JWT_SECRET}`;
-
-const getAuth = (req: any) => {
-  if (!req) return;
-  let token = req.headers.authorization;
-
-  if (token) {
-    if (token.startsWith('Bearer ')) {
-      // Remove Bearer from string
-      token = token.slice(7, token.length).trimLeft();
-    } else {
-      throw new AuthenticationError(
-        'Your session expired. Sign in again.',
-      );
-    }
-
-    try {
-      return jwt.verify(token, secret) as UserData;
-    } catch (e) {
-      throw new AuthenticationError(
-        'Your session expired. Sign in again.',
-      );
-    }
-  }
-};
+export interface GraphQLSubscriptionContext {
+  Auth: UserData;
+  Pubsub: PubSub;
+}
 
 export const isAuthenticated = (parent: any, args: any, context: GraphQLContext) => (context.Auth ? skip : new ForbiddenError('Not logged in'));
 
@@ -56,6 +37,7 @@ export const contextHandler = ({ req }: any): (GraphQLContext | null) => {
     return {
       Models,
       Auth: emptyAuth,
+      Pubsub: pubsub,
     };
   }
 
@@ -63,5 +45,6 @@ export const contextHandler = ({ req }: any): (GraphQLContext | null) => {
   return {
     Models,
     Auth: auth,
+    Pubsub: pubsub,
   };
 };

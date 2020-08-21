@@ -1,9 +1,9 @@
 import {
-  createTodo, deleteTodo, todos, updateTodo,
+  createTodo, deleteTodo, todos, updateTodo, todoUpdated
 } from './todo';
-import { createUser, login } from './auth';
+import { createUser, login, userUpdated } from './user';
 
-const resolvers: any = {
+const resolvers = {
   Query: {
     todos,
   },
@@ -14,6 +14,10 @@ const resolvers: any = {
     deleteTodo,
     login,
   },
+  Subscription: {
+    todoUpdated,
+    userUpdated
+  }
 };
 
 export default resolvers;
