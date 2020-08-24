@@ -1,12 +1,11 @@
-import { combineResolvers } from 'graphql-resolvers';
-import { GraphQLContext, isAuthenticated } from '../context';
-import { pubsub, TodoUpdated } from '../subscription/pubsub';
-import { withFilter } from 'apollo-server';
-import { TodoModel } from '../../models/todoModel';
+import { combineResolvers } from "graphql-resolvers";
+import { GraphQLContext, isAuthenticated, GraphQLSubscriptionContext } from "../context";
+import { pubsub, TodoUpdated } from "../subscription/pubsub";
+import { withFilter } from "apollo-server";
+import { TodoModel } from "../../models/todoModel";
 
 // resolver to handle todos related
-
-export interface ModifyTodoInput{
+export interface ModifyTodoInput {
   todoId: string;
   description: string;
 }
@@ -15,6 +14,10 @@ interface TodoArgs {
   createTodoInput: ModifyTodoInput;
   updateTodoInput: ModifyTodoInput;
   deleteTodoInput: ModifyTodoInput;
+}
+
+interface TodoUpdated {
+  todoUpdated: TodoModel
 }
 
 // query all the todos based on the userID
@@ -27,7 +30,7 @@ export const todos = combineResolvers(
     } catch (e) {
       throw new Error(e);
     }
-  },
+  }
 );
 
 // create a item for the specified user
@@ -43,7 +46,7 @@ export const createTodo = combineResolvers(
     } catch (e) {
       throw new Error(e);
     }
-  },
+  }
 );
 
 // update an item
@@ -59,7 +62,7 @@ export const updateTodo = combineResolvers(
 
       // if does not exist
       if (!todo) {
-        throw new Error('This todo item does not exist');
+        throw new Error("This todo item does not exist");
       }
 
       // change the description and save in the db
@@ -69,13 +72,13 @@ export const updateTodo = combineResolvers(
       await todo.save();
 
       // publish the updated todo to the event
-      context.Pubsub.publish(TodoUpdated, {todoUpdated: todo});
+      context.Pubsub.publish(TodoUpdated, { todoUpdated: todo });
 
       return todo;
     } catch (e) {
       throw new Error(e);
     }
-  },
+  }
 );
 
 // delete an item
@@ -91,7 +94,7 @@ export const deleteTodo = combineResolvers(
 
       // if does not exist
       if (!todo) {
-        throw new Error('This todo item does not exist');
+        throw new Error("This todo item does not exist");
       }
 
       // delete in the db
@@ -102,16 +105,22 @@ export const deleteTodo = combineResolvers(
     } catch (e) {
       throw new Error(e);
     }
-  },
+  }
 );
 
 //resolver for the subscription when todo updated
 export const todoUpdated = {
-      subscribe: withFilter(
-        () => pubsub.asyncIterator(TodoUpdated),
-         // every time the event fire
-        (payload, {contextId}): boolean => {
-          return false
-        },
-      )
+  resolve: (payload: TodoUpdated, args: any, context: any, info: any) => {
+    // resolve for manipulate the payload
+    payload.todoUpdated.id = payload.todoUpdated._id;
+    return payload.todoUpdated;
+  },
+  subscribe: withFilter(
+    // when the subscription is connected
+    () => pubsub.asyncIterator(TodoUpdated),
+    // every time the event fire
+    (payload, variables, context: GraphQLSubscriptionContext): boolean => {
+      return true;
+    }
+  ),
 };
