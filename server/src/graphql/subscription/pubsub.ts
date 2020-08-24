@@ -2,7 +2,6 @@ import { RedisPubSub } from 'graphql-redis-subscriptions';
 const Redis = require('ioredis')
 
 export const TodoUpdated = "TodoUpdated";
-export const UserUpdated = "UserUpdated";
 
 const options = {
     host: process.env.REDIS_DOMAIN_NAME || "localhost",

@@ -12,7 +12,6 @@ type Mutation {
 
 type Subscription {
     todoUpdated: Todo
-    userUpdated: User
 }
 
 type Todo {

@@ -1,7 +1,7 @@
 import {
   createTodo, deleteTodo, todos, updateTodo, todoUpdated
 } from './todo';
-import { createUser, login, userUpdated } from './user';
+import { createUser, login } from './user';
 
 const resolvers = {
   Query: {
@@ -16,7 +16,6 @@ const resolvers = {
   },
   Subscription: {
     todoUpdated,
-    userUpdated
   }
 };
 

@@ -1,5 +1,9 @@
 import { combineResolvers } from "graphql-resolvers";
-import { GraphQLContext, isAuthenticated, GraphQLSubscriptionContext } from "../context";
+import {
+  GraphQLContext,
+  isAuthenticated,
+  GraphQLSubscriptionContext,
+} from "../context";
 import { pubsub, TodoUpdated } from "../subscription/pubsub";
 import { withFilter } from "apollo-server";
 import { TodoModel } from "../../models/todoModel";
@@ -16,14 +20,10 @@ interface TodoArgs {
   deleteTodoInput: ModifyTodoInput;
 }
 
-interface TodoUpdated {
-  todoUpdated: TodoModel
-}
-
 // query all the todos based on the userID
 export const todos = combineResolvers(
   isAuthenticated,
-  async (parent: any, args: TodoArgs, context: GraphQLContext) => {
+  async (_parent: any, _args: TodoArgs, context: GraphQLContext) => {
     try {
       // make sure only get the todos that belongs to this user
       return context.Models.Todo.find({ user: context.Auth.userId });
@@ -72,7 +72,7 @@ export const updateTodo = combineResolvers(
       await todo.save();
 
       // publish the updated todo to the event
-      context.Pubsub.publish(TodoUpdated, { todoUpdated: todo });
+      context.Pubsub.publish(TodoUpdated, todo);
 
       return todo;
     } catch (e) {
@@ -110,16 +110,18 @@ export const deleteTodo = combineResolvers(
 
 //resolver for the subscription when todo updated
 export const todoUpdated = {
-  resolve: (payload: TodoUpdated, args: any, context: any, info: any) => {
+  resolve: (payload: TodoModel, _args: any, _context: any, _info: any) => {
     // resolve for manipulate the payload
-    payload.todoUpdated.id = payload.todoUpdated._id;
-    return payload.todoUpdated;
+    payload.id = payload._id;
+    return payload;
   },
   subscribe: withFilter(
     // when the subscription is connected
-    () => pubsub.asyncIterator(TodoUpdated),
+    () => {
+      return pubsub.asyncIterator(TodoUpdated);
+    },
     // every time the event fire
-    (payload, variables, context: GraphQLSubscriptionContext): boolean => {
+    (_payload, _variables, _context: GraphQLSubscriptionContext): boolean => {
       return true;
     }
   ),
